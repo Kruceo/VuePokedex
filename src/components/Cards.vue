@@ -4,20 +4,36 @@
 
 
         <div id="card" v-for="card in pokemonList" :key="card.id"
-            style="width: fit-content; height: fit-content; padding: 5px;margin: 10px;">
-            <div
-                style="background-color: lavender; border-radius: 1ch; width: 220px; height: 220px; overflow: hidden; display: block; padding: 20px;border-bottom: 2px solid rgba(0, 0, 0, .25);">
+            style="width: fit-content; height: fit-content; padding: 15px;margin: 10px;" :style="
+            [card.types[0] == 'grass' ? { 'background-color': '#a6f6af' } : {},
+            card.types[0] == 'fire' ? { 'background-color': '#ef4335' } : {},
+            card.types[0] == 'bug' ? { 'background-color': '#baafc4' } : {},
+            card.types[0] == 'poison' ? { 'background-color': '#036564' } : {},
+            card.types[0] == 'water' ? { 'background-color': '#0abfbc' } : {},
+            card.types[0] == 'electric' ? { 'background-color': '#ffdc68' } : {},
+            card.types[0] == 'ground' ? { 'background-color': '#c1b398' } : {},
+            card.types[0] == 'fairy' ? { 'background-color': 'pink' } : {},
+            card.types[0] == 'fighting' ? { 'background-color': '#7b3b3b' } : {},
+            card.types[0] == 'psychic' ? { 'background-color': '#031634' } : {},
+            card.types[0] == 'rock' ? { 'background-color': '#5c5863' } : {},
+            card.types[0] == 'ghost' ? { 'background-color': 'darkslateblue' } : {},
+            card.types[0] == 'ice' ? { 'background-color': 'lightblue' } : {},
+            card.types[0] == 'dragon' ? { 'background-color': 'tomato' } : {},
+            card.types[0] == 'dark' ? { 'background-color': '#413249' } : {},
+            card.types[0] == 'steel' ? { 'background-color': '#5b7c8d' } : {}]">
+            <div>
 
                 <div style="display: flex; justify-content: center; align-items: center;">
                     <div id="poke_image"
-                        style="overflow: hidden; width: 220px; height: 200px; background-color: white; border-radius: 10px;">
+                        style="overflow: hidden; width: 220px; height: 200px; background-color: white; border-radius: 10px; color: blanchedalmond;">
                         <img v-bind:src="card.img" style="width: 200px; height: 200px">
                     </div>
                 </div>
                 <h2><strong>{{ card.name }}</strong></h2>
             </div>
             <div id="type">
-                <div>
+                <div :style="
+                [!card.types[1] ? { 'width': '100%' } : {}]">
                     <h2>{{ card.types[0] }}</h2>
 
                 </div>
@@ -51,13 +67,16 @@ export default {
     name: "App",
     data() {
         return {
-            grassColor: 'red',
+            grass: 'red',
+
+            isLoading: 'false'
         }
     },
 
     async setup() {
 
-        let resp = await fetch('https://pokeapi.co/api/v2/pokemon');
+
+        let resp = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=50&offset=0');
         let list = await resp.json();
         let firstList = await list.results;
 
@@ -86,7 +105,8 @@ export default {
                 obj['all'].push({
                     "name": pokemonStats.name,
                     "img": pokemonStats.sprites.front_default,
-                    "types": [pokemonStats.types[0].type.name]
+                    "types": [pokemonStats.types[0].type.name],
+
 
 
                 });
@@ -125,6 +145,12 @@ body {
 }
 
 #card {
+
+    transform: scale(0);
+
+    transition: trasnform 1s;
+
+    transform: scale(1);
     border-radius: 10px;
     background-color: rgb(179, 179, 179);
     transform: scale(1);
@@ -182,7 +208,7 @@ body {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-row: 4;
     grid-column: 4;
-    background-color: rgb(37, 37, 37);
+
     padding: 7px;
 
 }
