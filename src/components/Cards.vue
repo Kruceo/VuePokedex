@@ -1,59 +1,59 @@
 <template>
 
-    <header id="Table">
+    <div style="display: flex; justify-content: center">
+        <header style="width: fit-content;">
+            <div style="display: flex">
+                <input type="text" v-model="pokesearch"
+                    style="display: flex; border-radius: 2vw; width: 50%; height: 7vh; font-size: 3vh; padding-inline: 2vw; border: 0; margin-inline: 15px;"
+                    placeholder="Pesquise um pokemon!" />
 
 
-        <div id="card" v-for="card in pokemonList" :key="card.id"
-            style="width: fit-content; height: fit-content; padding: 15px;margin: 10px;" :style="
-            [card.types[0] == 'grass' ? { 'background-color': '#a6f6af' } : {},
-            card.types[0] == 'fire' ? { 'background-color': '#ef4335' } : {},
-            card.types[0] == 'bug' ? { 'background-color': '#baafc4' } : {},
-            card.types[0] == 'poison' ? { 'background-color': '#036564' } : {},
-            card.types[0] == 'water' ? { 'background-color': '#0abfbc' } : {},
-            card.types[0] == 'electric' ? { 'background-color': '#ffdc68' } : {},
-            card.types[0] == 'ground' ? { 'background-color': '#c1b398' } : {},
-            card.types[0] == 'fairy' ? { 'background-color': 'pink' } : {},
-            card.types[0] == 'fighting' ? { 'background-color': '#7b3b3b' } : {},
-            card.types[0] == 'psychic' ? { 'background-color': '#031634' } : {},
-            card.types[0] == 'rock' ? { 'background-color': '#5c5863' } : {},
-            card.types[0] == 'ghost' ? { 'background-color': 'darkslateblue' } : {},
-            card.types[0] == 'ice' ? { 'background-color': 'lightblue' } : {},
-            card.types[0] == 'dragon' ? { 'background-color': 'tomato' } : {},
-            card.types[0] == 'dark' ? { 'background-color': '#413249' } : {},
-            card.types[0] == 'steel' ? { 'background-color': '#5b7c8d' } : {}]">
-            <div>
 
-                <div style="display: flex; justify-content: center; align-items: center;">
-                    <div id="poke_image"
-                        style="overflow: hidden; width: 220px; height: 200px; background-color: white; border-radius: 10px; color: blanchedalmond;">
-                        <img v-bind:src="card.img" style="width: 200px; height: 200px">
+                <select>
+                    <option value="all">All</option>
+                    <option value="grass">Grass </option>
+                </select>
+
+            </div>
+
+            <header id="table" style="background-color: gray; border-radius: 1rem; margin-top: 5vh;">
+
+                <header id="card-grid">
+                    <div id=" card" v-for="card in pokemonFilteredList" :key="card.id"
+                        :style="{ 'background-color': colors[card.types[0]] }">
+                        <div>
+                            <div style="display: flex; justify-content: center; align-items: center;">
+                                <div id="poke-image"
+                                    style="overflow: hidden; width: 220px; height: 200px; background-color: white; border-radius: 1rem;">
+                                    <img v-bind:src="card.img" style="width: 200px; height: 200px">
+                                </div>
+                            </div>
+                            <h2 id="name">{{ card.name }}</h2>
+                        </div>
+                        <div id="type">
+                            <div :style="
+                            [!card.types[1] ? { 'width': '100%' } : {}]">
+                                <h2>{{ card.types[0] }}</h2>
+
+                            </div>
+                            <div v-if="card.types[1]">
+                                <h2>{{ card.types[1] }}</h2>
+
+
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <h2><strong>{{ card.name }}</strong></h2>
-            </div>
-            <div id="type">
-                <div :style="
-                [!card.types[1] ? { 'width': '100%' } : {}]">
-                    <h2>{{ card.types[0] }}</h2>
-
-                </div>
-                <div v-if="card.types[1]">
-                    <h2>{{ card.types[1] }}</h2>
 
 
-                </div>
-            </div>
-        </div>
-
-
-    </header>
-
+                </header>
+            </header>
+        </header>
+    </div>
 </template>
 
 <script>
 
 
-//import { ref } from 'vue';
 
 
 
@@ -67,22 +67,54 @@ export default {
     name: "App",
     data() {
         return {
-            grass: 'red',
+            pokesearch: '',
+            colors: {
+                grass: '#a6f6af',
+                steel: '#5b7c8d',
+                water: '#0abfbc',
+                fire: '#ef4335',
+                poison: '#036564',
+                electric: '#ffdc68',
+                ground: '#c1b398',
+                bug: '#928941',
+                fairy: 'pink',
+                fighting: '#7b3b3b',
+                psychic: '#031634',
+                rock: '#5c5863',
+                ghost: 'darkslateblue',
+                ice: 'lightblue',
+                dragon: 'tomato',
+                dark: '#413249',
 
+            },
             isLoading: 'false'
+        }
+    }, computed:
+    {
+        pokemonFilteredList() {
+
+            return this.pokemonList.filter((pokemon) => {
+                //var string = pokemon.name;
+                console.log(pokemon.name);
+                return pokemon.name.toLowerCase().includes(this.pokesearch.toLowerCase())
+            })
+
+
+
         }
     },
 
     async setup() {
 
-
-        let resp = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=50&offset=0');
+        let resp = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=100&offset=0');
         let list = await resp.json();
         let firstList = await list.results;
 
         console.log(firstList)
         var newList = '{"all":[]}';
         for (let i of (firstList)) {
+
+            // if (JSON.stringify(i.name).includes(this.search)) { console.log('boa') }
             let resp = await fetch(i.url);
             let pokemonStats = await resp.json();
 
@@ -115,16 +147,33 @@ export default {
 
 
         }
-        const pokemonList = JSON.parse(newList).all
-        console.log(pokemonList);
+
+
+
+        var pokemonList = JSON.parse(newList).all
+
         return { pokemonList }
     },
 }
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Mingzat&display=swap');
+
+*:focus {
+    outline: none;
+}
+
 * {
     margin: 0 0;
+}
+
+h2 {
+    font-family: 'mingzat';
+}
+
+img {
+    src: './assets/tatuclickericon.png';
 }
 
 body {
@@ -138,20 +187,16 @@ body {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
 
-    display: flex;
-    justify-content: center;
+
 }
 
 #card {
-
-    transform: scale(0);
-
-    transition: trasnform 1s;
-
-    transform: scale(1);
-    border-radius: 10px;
+    width: fit-content;
+    height: fit-content;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 1rem;
     background-color: rgb(179, 179, 179);
     transform: scale(1);
     transition: transform 0.2s;
@@ -159,7 +204,12 @@ body {
 
 #card:hover {
     transform: scale(1.06);
-    transition: transform 0.2s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    transition: transform 0.2s cubic-bezier(0.23, 1, 0.320, 1)
+}
+
+#name {
+    color: white;
+    text-transform: uppercase;
 }
 
 #type {
@@ -180,7 +230,7 @@ body {
 
     font-size: 12px;
     width: var(--types_width);
-    border-radius: 5px;
+    border-radius: 1rem;
 
 
     background-color: lavender;
@@ -192,8 +242,8 @@ body {
 #type>div:nth-child(2) {
     font-size: 12px;
     width: var(--types_width);
-    border-radius: 5px;
-    padding-top: 5px;
+    border-radius: 1rem;
+
 
     background-color: lavender;
     border-bottom: 2px solid rgba(0, 0, 0, .25);
@@ -202,7 +252,7 @@ body {
 
 }
 
-#Table {
+#card-grid {
     width: fit-content;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -211,9 +261,15 @@ body {
 
     padding: 7px;
 
+
+
 }
 
-#table>* {}
+#table {
+    display: flex;
+    justify-content: center;
+
+}
 </style>
 
              
