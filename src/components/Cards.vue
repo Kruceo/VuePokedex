@@ -1,6 +1,6 @@
 <template>
 
-    <div style="display: flex; justify-content: center">
+    <div class="container" style="display: flex; justify-content: center">
         <header style="width: fit-content;">
             <div style="display: flex">
                 <input type="text" v-model="pokesearch"
@@ -19,11 +19,11 @@
             <header id="table" style="background-color: gray; border-radius: 10px; margin-top: 5vh;">
 
                 <header id="card-grid">
-                    <div id="card-hitbox" v-for="card in pokemonFilteredList.slice(0, 20)" :key="card.id">
+                    <div class="" id="card-hitbox" v-for="card in pokemonFilteredList.slice(0, 20)" :key="card.id">
                         <div id="card">
                             <div id="card-front" :style="{ 'background': colors[card.types[0]] }">
 
-                                <div>
+                                <div di="pokemon-image">
                                     <div style="display: flex; justify-content: center; align-items: center;">
                                         <div id="poke-image"
                                             style="overflow: hidden; width: 14vw; height: 14vw; background-color: white; border-radius: 10px;">
@@ -47,37 +47,20 @@
                                     </div>
                                 </div>
                             </div>
-                            <div id="card-back" :style="{ 'background': colors[card.types[0]] }">
 
+
+                        </div>
+                        <div id="card-back" :style="{ 'background': colors[card.types[0]] }">
+
+                            <div>
                                 <div>
-                                    <div
-                                        style=" width: 14vw;display: flex; justify-content: center; align-items: center;">
-                                        <div id="pokemon-info"
-                                            style="overflow: hidden;width: 14vw; height: max-content; background-color: rgba(30, 30, 30, 0.15); border-radius: 10px; text-align: left; padding: 1vw;">
-                                            <h2 style="font-size: 1.5vw; width:fit-content; color: white">HP: {{ card.hp
-                                            }}</h2>
-                                            <h2 style="font-size: 1.5vw;width:fit-content; color: white">ATK: {{
-                                                    card.attk
-                                            }}</h2>
-                                            <h2 style="font-size: 1.5vw;width:fit-content; color: white">DEF: {{
-                                                    card.def
-                                            }}</h2>
-                                            <h2 style="font-size: 1.5vw;width:fit-content; color: white">SATK: {{
-                                                    card.satk
-                                            }}</h2>
-                                            <h2 style="font-size: 1.5vw;width:fit-content; color: white">SDEF: {{
-                                                    card.sdef
-                                            }}</h2>
-                                            <h2 style="font-size: 1.5vw;width:fit-content; color: white;">SPEED: {{
-                                                    card.speed
-                                            }}</h2>
-                                        </div>
+                                    <div id="pokemon-info">
                                     </div>
-
                                 </div>
-                                <div id="type">
 
-                                </div>
+                            </div>
+                            <div id="type">
+
                             </div>
                         </div>
                     </div>
@@ -143,7 +126,7 @@ export default
 
 
         async setup() {
-            var limit = 24;
+            var limit = 12;
             var offset = 0;
             //var jutar = {};
 
@@ -164,7 +147,7 @@ export default
                             "img": pokemonStats.sprites.other.home.front_default,
                             "types": [pokemonStats.types[0].type.name, pokemonStats.types[1].type.name],
                             "hp": pokemonStats.stats[0].base_stat,
-                            "attk": pokemonStats.stats[1].base_stat,
+                            "atk": pokemonStats.stats[1].base_stat,
                             "def": pokemonStats.stats[2].base_stat,
                             "satk": pokemonStats.stats[3].base_stat,
                             "sdef": pokemonStats.stats[4].base_stat,

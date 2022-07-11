@@ -2,7 +2,8 @@
 
   <suspense>
     <template #default>
-      <Cards></Cards>
+      <Cardsp></cardsp>
+
     </template>
     <template #fallback>
       <div>
@@ -14,7 +15,8 @@
 </template>
 
 <script>
-import Cards from "./components/Cards.vue";
+
+import Cardsp from "./components/Cardsp.vue";
 
 
 //import { ref } from 'vue';
@@ -23,9 +25,14 @@ import Cards from "./components/Cards.vue";
 
 export default {
   name: "App",
-  components: { Cards }
+  components: { Cardsp }
 }
 </script>
 
-<style>
+<style lang="scss">
+$primary: rgba(63, 63, 63, 0.267);
+$secondary: #00ff1577;
+
+
+@import 'bootstrap';
 </style>
