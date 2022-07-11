@@ -19,7 +19,7 @@
             <header id="table" style="background-color: gray; border-radius: 10px; margin-top: 5vh;">
 
                 <header id="card-grid">
-                    <div id="card-hitbox" v-for="card in pokemonFilteredList" :key="card.id">
+                    <div id="card-hitbox" v-for="card in pokemonFilteredList.slice(0, 20)" :key="card.id">
                         <div id="card">
                             <div id="card-front" :style="{ 'background': colors[card.types[0]] }">
 
@@ -91,6 +91,7 @@
 
 <script>
 
+var pokemonList = JSON.parse('{"all":[]}');
 export default
     {
         name: "App",
@@ -119,6 +120,8 @@ export default
                 },
                 types: ['grass', 'steel', 'water', 'fire', 'poison', 'electric', 'ground', 'bug', 'fairy', 'fighting', 'psychic', 'rock', 'ghost', 'ice', 'dragon', 'dark'],
 
+
+
             }
         },
 
@@ -127,7 +130,7 @@ export default
         computed: {
             pokemonFilteredList() {
 
-                return this.pokemonList.filter((pokemon) => {
+                return pokemonList.all.filter((pokemon) => {
 
                     //console.log(pokemon.name);
 
@@ -135,83 +138,155 @@ export default
 
 
                 })
-
-
-
-            }
+            },
         },
 
 
         async setup() {
-            let ser = await fetch('https://pokeapi.co/api/v2/type/fire')
-            let top = await ser.json()
-            console.log(top);
+            var limit = 24;
+            var offset = 0;
+            //var jutar = {};
 
-            //--------------------------------------------------------------------------
+            for (var i = 0; i < 1; i++) {
+                let resp = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=' + limit + '&offset=' + offset);
+                let list = await resp.json();
+                let firstList = list.results;
+                // var newList = '{"all":[]}';
+                //var obj = pokemonList
+                for (let i of firstList) {
 
-
-            let resp = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=' + 500 + '&offset=0');
-
-            let list = await resp.json();
-            let firstList = await list.results;
-
-            console.log(firstList)
-            var newList = '{"all":[]}';
-            for (let i of (firstList)) {
-
-                // if (JSON.stringify(i.name).includes(this.search)) { console.log('boa') }
-                let resp = await fetch(i.url);
-                let pokemonStats = await resp.json();
-
-
-                console.log(pokemonStats);
-
-
-                var obj = JSON.parse(newList);
-
-                if (pokemonStats.types[1]) {
-                    obj['all'].push({
-                        "name": pokemonStats.name,
-                        "img": pokemonStats.sprites.other.home.front_default,
-                        "types": [pokemonStats.types[0].type.name, pokemonStats.types[1].type.name],
-                        "hp": pokemonStats.stats[0].base_stat,
-                        "attk": pokemonStats.stats[1].base_stat,
-                        "def": pokemonStats.stats[2].base_stat,
-                        "satk": pokemonStats.stats[3].base_stat,
-                        "sdef": pokemonStats.stats[4].base_stat,
-                        "speed": pokemonStats.stats[5].base_stat,
+                    // if (JSON.stringify(i.name).includes(this.search)) { console.log('boa') }
+                    let resp = await fetch(i.url);
+                    let pokemonStats = await resp.json();
+                    if (pokemonStats.types[1]) {
+                        pokemonList["all"].push({
+                            "name": pokemonStats.name,
+                            "img": pokemonStats.sprites.other.home.front_default,
+                            "types": [pokemonStats.types[0].type.name, pokemonStats.types[1].type.name],
+                            "hp": pokemonStats.stats[0].base_stat,
+                            "attk": pokemonStats.stats[1].base_stat,
+                            "def": pokemonStats.stats[2].base_stat,
+                            "satk": pokemonStats.stats[3].base_stat,
+                            "sdef": pokemonStats.stats[4].base_stat,
+                            "speed": pokemonStats.stats[5].base_stat,
 
 
-                    });
+                        });
+                    }
+                    else {
+                        pokemonList['all'].push({
+                            "name": pokemonStats.name,
+                            "img": pokemonStats.sprites.other.home.front_default,
+                            "types": [pokemonStats.types[0].type.name],
+                            "hp": pokemonStats.stats[0].base_stat,
+                            "attk": pokemonStats.stats[1].base_stat,
+                            "def": pokemonStats.stats[2].base_stat,
+                            "satk": pokemonStats.stats[3].base_stat,
+                            "sdef": pokemonStats.stats[4].base_stat,
+                            "speed": pokemonStats.stats[5].base_stat,
+
+
+                        });
+                    }
+
+
+
+
+
                 }
-                else {
-                    obj['all'].push({
-                        "name": pokemonStats.name,
-                        "img": pokemonStats.sprites.other.home.front_default,
-                        "types": [pokemonStats.types[0].type.name],
-                        "hp": pokemonStats.stats[0].base_stat,
-                        "attk": pokemonStats.stats[1].base_stat,
-                        "def": pokemonStats.stats[2].base_stat,
-                        "satk": pokemonStats.stats[3].base_stat,
-                        "sdef": pokemonStats.stats[4].base_stat,
-                        "speed": pokemonStats.stats[5].base_stat,
 
-
-                    });
-                }
-                newList = JSON.stringify(obj);
-
-
+                offset += limit;
+                console.log(pokemonList)
+                setTimeout(() => console.log("test"), 5000)
+                // pokemonList = JSON.parse(newList).all;
             }
 
+            // var pokemonList = JSON.parse(newList).all
 
+            //return { pokemonList }
 
-            var pokemonList = JSON.parse(newList).all
-
-            return { pokemonList }
         },
 
+        watch: {
+
+            pokemonList: function () {
+                this.pokemonFilteredList;
+            }
+
+        },
+
+        async mounted() {
+
+
+            var limit = 200;
+            var offset = 0;
+            //var jutar = {};
+
+            for (var i = 0; i < 5; i++) {
+                let resp = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=' + limit + '&offset=' + offset);
+                let list = await resp.json();
+                let firstList = list.results;
+                // var newList = '{"all":[]}';
+                //var obj = pokemonList
+                for (let i of firstList) {
+
+                    // if (JSON.stringify(i.name).includes(this.search)) { console.log('boa') }
+                    let resp = await fetch(i.url);
+                    let pokemonStats = await resp.json();
+                    if (pokemonStats.types[1]) {
+                        pokemonList["all"].push({
+                            "name": pokemonStats.name,
+                            "img": pokemonStats.sprites.other.home.front_default,
+                            "types": [pokemonStats.types[0].type.name, pokemonStats.types[1].type.name],
+                            "hp": pokemonStats.stats[0].base_stat,
+                            "attk": pokemonStats.stats[1].base_stat,
+                            "def": pokemonStats.stats[2].base_stat,
+                            "satk": pokemonStats.stats[3].base_stat,
+                            "sdef": pokemonStats.stats[4].base_stat,
+                            "speed": pokemonStats.stats[5].base_stat,
+
+
+                        });
+                    }
+                    else {
+                        pokemonList['all'].push({
+                            "name": pokemonStats.name,
+                            "img": pokemonStats.sprites.other.home.front_default,
+                            "types": [pokemonStats.types[0].type.name],
+                            "hp": pokemonStats.stats[0].base_stat,
+                            "attk": pokemonStats.stats[1].base_stat,
+                            "def": pokemonStats.stats[2].base_stat,
+                            "satk": pokemonStats.stats[3].base_stat,
+                            "sdef": pokemonStats.stats[4].base_stat,
+                            "speed": pokemonStats.stats[5].base_stat,
+
+
+                        });
+                    }
+
+
+
+
+
+                }
+
+                offset += limit;
+                console.log(pokemonList)
+
+                setTimeout(() => console.log("test"), 5000)
+                // pokemonList = JSON.parse(newList).all;
+            }
+
+            // var pokemonList = JSON.parse(newList).all
+
+            //return { pokemonList }
+
+        }
+
+
+
     }
+
 </script>
 
 <style>
