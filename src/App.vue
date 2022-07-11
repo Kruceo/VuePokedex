@@ -2,8 +2,7 @@
 
   <suspense>
     <template #default>
-      <Cardsp></cardsp>
-
+      <MyPokedex />
     </template>
     <template #fallback>
       <div>
@@ -16,7 +15,9 @@
 
 <script>
 
-import Cardsp from "./components/Cardsp.vue";
+
+import MyPokedex from "./components/MyPokedex.vue";
+
 
 
 //import { ref } from 'vue';
@@ -25,13 +26,13 @@ import Cardsp from "./components/Cardsp.vue";
 
 export default {
   name: "App",
-  components: { Cardsp }
+  components: { MyPokedex }
 }
 </script>
 
 <style lang="scss">
-$primary: rgba(63, 63, 63, 0.267);
-$secondary: #00ff1577;
+$primary: rgba(41, 41, 41, 0.267);
+$secondary: #ffffff77;
 
 
 @import 'bootstrap';

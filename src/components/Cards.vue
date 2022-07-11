@@ -115,8 +115,6 @@ export default
 
                 return pokemonList.all.filter((pokemon) => {
 
-                    //console.log(pokemon.name);
-
                     return pokemon.name.toLowerCase().includes(this.pokesearch.toLowerCase()) && pokemon.types[0].includes(this.typefilter.toLocaleLowerCase()) || pokemon.name.toLowerCase().includes(this.pokesearch.toLowerCase()) && pokemon.types[1] && pokemon.types[1].includes(this.typefilter.toLocaleLowerCase())
 
 
@@ -128,17 +126,13 @@ export default
         async setup() {
             var limit = 12;
             var offset = 0;
-            //var jutar = {};
 
             for (var i = 0; i < 1; i++) {
                 let resp = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=' + limit + '&offset=' + offset);
                 let list = await resp.json();
                 let firstList = list.results;
-                // var newList = '{"all":[]}';
-                //var obj = pokemonList
                 for (let i of firstList) {
 
-                    // if (JSON.stringify(i.name).includes(this.search)) { console.log('boa') }
                     let resp = await fetch(i.url);
                     let pokemonStats = await resp.json();
                     if (pokemonStats.types[1]) {
@@ -260,9 +254,7 @@ export default
                 // pokemonList = JSON.parse(newList).all;
             }
 
-            // var pokemonList = JSON.parse(newList).all
 
-            //return { pokemonList }
 
         }
 
