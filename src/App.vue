@@ -14,7 +14,7 @@ export default {
 </script>
 
 <style lang="scss">
-$primary: rgba(41, 41, 41, 0.267);
+$primary: #455;
 $secondary: #ffffff77;
 
 

@@ -2,10 +2,6 @@
 
     <PokemonList :pokemons="getList()" />
 
-
-
-    <h2>BOIOLA</h2>
-
 </template>
 
 <script>
@@ -33,19 +29,27 @@ async function getPokemonList(initialOffset, limit, times) {
             if (pokemonStats.types[1]) {
                 pokemonList["all"].push({
                     "name": pokemonStats.name,
+                    "id": pokemonStats.id,
                     "img": pokemonStats.sprites.other.home.front_default,
                     "types": [pokemonStats.types[0].type.name, pokemonStats.types[1].type.name],
                     stats: {
                         "hp": pokemonStats.stats[0].base_stat,
+                        "xp": pokemonStats.base_experience,
                         "atk": pokemonStats.stats[1].base_stat,
                         "def": pokemonStats.stats[2].base_stat,
-                        "satk": pokemonStats.stats[3].base_stat,
-                        "sdef": pokemonStats.stats[4].base_stat,
+                        "s-atk": pokemonStats.stats[3].base_stat,
+                        "s-def": pokemonStats.stats[4].base_stat,
                         "speed": pokemonStats.stats[5].base_stat,
-                        "xp": pokemonStats.base_experience,
+
                         "weight": pokemonStats.weight,
+                        "height": pokemonStats.height,
                     },
+                    ab: pokemonStats.abilities,
+                    moves: pokemonStats.moves,
                     "captured": false,
+
+
+
 
 
 
@@ -54,23 +58,26 @@ async function getPokemonList(initialOffset, limit, times) {
             else {
                 pokemonList['all'].push({
                     "name": pokemonStats.name,
+                    "id": pokemonStats.id,
                     "img": pokemonStats.sprites.other.home.front_default,
                     "types": [pokemonStats.types[0].type.name],
                     stats: {
                         "hp": pokemonStats.stats[0].base_stat,
                         "atk": pokemonStats.stats[1].base_stat,
                         "def": pokemonStats.stats[2].base_stat,
-                        "satk": pokemonStats.stats[3].base_stat,
-                        "sdef": pokemonStats.stats[4].base_stat,
+                        "s-atk": pokemonStats.stats[3].base_stat,
+                        "s-def": pokemonStats.stats[4].base_stat,
                         "speed": pokemonStats.stats[5].base_stat,
                         "xp": pokemonStats.base_experience,
                         "weight": pokemonStats.weight,
+                        "height": pokemonStats.height,
 
                     },
+                    ab: pokemonStats.abilities,
+                    moves: pokemonStats.moves,
                     "captured": false,
-
-
                 });
+                console.log(pokemonStats)
             }
         }
 
@@ -98,7 +105,7 @@ export default
 
         },
         async mounted() {
-            await getPokemonList(10, 10, 5)
+            await getPokemonList(10, 100, 5)
         }
     }
 </script>

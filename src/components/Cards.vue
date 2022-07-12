@@ -174,14 +174,9 @@ export default
 
                 offset += limit;
                 console.log(pokemonList)
-                setTimeout(() => console.log("test"), 5000)
-                // pokemonList = JSON.parse(newList).all;
+
+
             }
-
-            // var pokemonList = JSON.parse(newList).all
-
-            //return { pokemonList }
-
         },
 
         watch: {

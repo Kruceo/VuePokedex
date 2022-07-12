@@ -11,7 +11,7 @@ export default
     }
 </script>
 
-<template>
+<template >
     <div class="col-12 p-1">
         <div id="info" class="text-center">
             <h2 style="color:white">{{ title }}</h2>
