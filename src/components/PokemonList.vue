@@ -2,7 +2,12 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-dark mb-5">
         <div class="container-fluid">
-            <a class="navbar-brand text-light" href="#">Pokedex</a>
+            <RouterLink to="/">
+                <a class="navbar-brand text-light" href="#">pokedexAPI}</a>
+            </RouterLink>
+            <RouterLink to="/mypokedex">
+                <a class="navbar-brand text-light" href="#">My Pokedex</a>
+            </RouterLink>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -14,11 +19,12 @@
                 <div class="col-4">
                     <form class="d-flex">
                         <input class="form-control me-2" type="search" placeholder="Search" v-model="pokesearch"
-                            aria-label="Search">
+                            aria-label="Search" style="border-radius:15px ; border: 0;">
 
-                        <select class=" " v-model="typefilter" id="">
+                        <select class=" " v-model="typefilter" id="" style="border-radius:15px ; border: 0;">
                             <option value="">All</option>
-                            <option v-for="item in types" :key="item">{{ item }}</option>
+                            <option v-for="item in types" :key="item" style="text-transform: uppercase;">{{ item }}
+                            </option>
                         </select>
                     </form>
                 </div>
@@ -28,15 +34,8 @@
     </nav>
 
     <div class="container">
-
-
-
         <div class="row">
-
-
             <div class="col-12 col-sm-6 col-md-6 col-lg-3" v-for="card in pokemonFilteredList.slice(0, 30)" :key="card">
-
-
                 <div class="card-wrapper">
                     <div class="content">
                         <div class="card-front mb-4" :style="{ 'background': colors[card.types[0]] }">
@@ -73,9 +72,22 @@
 
                                     <div class="row m-0">
                                         <CardStats title="STATS" text="rafola" :pokemon-stat="card.stats" />
-
+                                    </div>
+                                    <div class="row">
                                         <div class="col-12 p-1">
 
+                                            <div v-if="card.captured == false" id="info" class="text-center">
+                                                <button @click="savePokemon(card)"
+                                                    style="background-color: rgb(100, 220, 100);color: white;border:0 ; border-radius: 5px; font-size: 22px;">CAPTURAR</button>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="col-12 p-1">
+                                            <div v-if="card.captured == true" id="info" class="text-center">
+                                                <button @click="deletePokemon(card)"
+                                                    style="background-color: rgb(120, 0, 0);color: white;border:0 ; border-radius: 5px; font-size: 22px;">DELETAR</button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -89,91 +101,19 @@
 </template>
 
 <script>
-import CardStats from './cardStats.vue';
+import CardStats from './CardStats.vue';
 
-
-async function getPokemonList(initialOffset, limit, times) {
-
-    var offset = initialOffset;
-    for (var i = 0; i < times; i++) {
-        let resp = await fetch('https://pokeapi.co/api/v2/pokemon/?limit=' + limit + '&offset=' + offset);
-        let list = await resp.json();
-        let firstList = list.results;
-        // var newList = '{"all":[]}';
-        //var obj = pokemonList
-        for (let i of firstList) {
-
-
-            let resp = await fetch(i.url);
-            let pokemonStats = await resp.json();
-
-            if (pokemonStats.types[1]) {
-                pokemonList["all"].push({
-                    "name": pokemonStats.name,
-                    "img": pokemonStats.sprites.other.home.front_default,
-                    "types": [pokemonStats.types[0].type.name, pokemonStats.types[1].type.name],
-                    stats: {
-                        "hp": pokemonStats.stats[0].base_stat,
-                        "atk": pokemonStats.stats[1].base_stat,
-                        "def": pokemonStats.stats[2].base_stat,
-                        "satk": pokemonStats.stats[3].base_stat,
-                        "sdef": pokemonStats.stats[4].base_stat,
-                        "speed": pokemonStats.stats[5].base_stat,
-                        "xp": pokemonStats.base_experience,
-                        "weight": pokemonStats.weight,
-                    },
-
-
-                });
-            }
-            else {
-                pokemonList['all'].push({
-                    "name": pokemonStats.name,
-                    "img": pokemonStats.sprites.other.home.front_default,
-                    "types": [pokemonStats.types[0].type.name],
-                    stats: {
-                        "hp": pokemonStats.stats[0].base_stat,
-                        "atk": pokemonStats.stats[1].base_stat,
-                        "def": pokemonStats.stats[2].base_stat,
-                        "satk": pokemonStats.stats[3].base_stat,
-                        "sdef": pokemonStats.stats[4].base_stat,
-                        "speed": pokemonStats.stats[5].base_stat,
-                        "xp": pokemonStats.base_experience,
-                        "weight": pokemonStats.weight,
-                    }
-
-                });
-            }
-
-
-
-
-
-        }
-
-        offset += limit;
-
-
-        // pokemonList = JSON.parse(newList).all;
-    }
-    console.log(pokemonList)
-}
-var pokemonList = JSON.parse('{"all":[]}');
 export default
     {
-        name: "CardSp",
-
-
+        name: "PokemonList",
         props:
         {
-            pokemons: Object
+            pokemons: Object,
         },
-
-
         data() {
             return {
 
-
+                allPokemon: this.pokemons,
                 pokesearch: "",
                 typefilter: "",
                 colors: {
@@ -199,7 +139,7 @@ export default
         },
         computed: {
             pokemonFilteredList() {
-                return this.pokemons.filter((pokemon) => {
+                return this.allPokemon.filter((pokemon) => {
                     //console.log(pokemon.name);
                     return pokemon.name.toLowerCase().includes(this.pokesearch.toLowerCase())
                         && pokemon.types[0].includes(this.typefilter.toLocaleLowerCase())
@@ -208,18 +148,56 @@ export default
                         && pokemon.types[1].includes(this.typefilter.toLocaleLowerCase());
                 });
             },
-        },
-        async setup() {
-            await getPokemonList(0, 12, 1);
-        },
-        watch: {
-            pokemonList: function () {
-                this.pokemonFilteredList;
+
+
+
+        }
+        ,
+        methods:
+        {
+            clone(itemToClone) {
+                return itemToClone;
+            },
+
+            filterToDel(filterString) {
+                return this.allPokemon.filter((pokemon) => {
+
+                    if (pokemon.name != filterString) {
+                        console.log(pokemon.name + ' % ' + filterString);
+                        return pokemon;
+                    }
+                });
+            },
+            savePokemon(newPokemon) {
+                var test = JSON.parse(localStorage.getItem('pokemons')).filter((pok) => { return pok.name.includes(newPokemon.name) })
+
+
+                if (!test[0]) {
+                    const local = localStorage.getItem("pokemons");
+                    const saved = local ? JSON.parse(local) : [];
+                    const pokemonToAdd = Object.assign({}, newPokemon)
+
+                    console.log(pokemonToAdd)
+                    pokemonToAdd.captured = true;
+                    const pokedex = [...saved, pokemonToAdd];
+                    const pokedexString = JSON.stringify(pokedex);
+                    localStorage.setItem("pokemons", pokedexString);
+
+                    console.log(newPokemon)
+                }
+            },
+            deletePokemon(delPokemon) {
+                //const local = localStorage.getItem("pokemons");
+                //const saved = local ? JSON.parse(local) : [];
+                console.log('deleted -> ' + delPokemon.name);
+                const pokedex = this.filterToDel(delPokemon.name)
+                const pokedexString = JSON.stringify(pokedex);
+                localStorage.setItem("pokemons", pokedexString);
+                this.allPokemon = pokedex;
             }
         },
-        async mounted() {
-            // await getPokemonList(12, 100, 2);
-        },
+
+
         components: { CardStats }
     }
 

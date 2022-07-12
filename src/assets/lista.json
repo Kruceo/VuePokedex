@@ -1,211 +1,213 @@
-[
-    {
-        "name": "pikasauro",
-        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/100.png",
-        "types": [
-            "grass",
-            "poison"
-        ],
-        "stats": {
-            "hp": 45,
-            "atk": 49,
-            "def": 49,
-            "satk": 65,
-            "sdef": 65,
-            "speed": 45,
-            "xp": 64,
-            "weight": 69
+{
+    "all": [
+        {
+            "name": "pikasauro",
+            "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/100.png",
+            "types": [
+                "grass",
+                "poison"
+            ],
+            "stats": {
+                "hp": 45,
+                "atk": 49,
+                "def": 49,
+                "satk": 65,
+                "sdef": 65,
+                "speed": 45,
+                "xp": 64,
+                "weight": 69
+            }
+        },
+        {
+            "name": "ivysaur",
+            "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/2.png",
+            "types": [
+                "grass",
+                "poison"
+            ],
+            "stats": {
+                "hp": 60,
+                "atk": 62,
+                "def": 63,
+                "satk": 80,
+                "sdef": 80,
+                "speed": 60,
+                "xp": 142,
+                "weight": 130
+            }
+        },
+        {
+            "name": "venusaur",
+            "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/3.png",
+            "types": [
+                "grass",
+                "poison"
+            ],
+            "stats": {
+                "hp": 80,
+                "atk": 82,
+                "def": 83,
+                "satk": 100,
+                "sdef": 100,
+                "speed": 80,
+                "xp": 263,
+                "weight": 1000
+            }
+        },
+        {
+            "name": "charmander",
+            "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/4.png",
+            "types": [
+                "fire"
+            ],
+            "stats": {
+                "hp": 39,
+                "atk": 52,
+                "def": 43,
+                "satk": 60,
+                "sdef": 50,
+                "speed": 65,
+                "xp": 62,
+                "weight": 85
+            }
+        },
+        {
+            "name": "charmeleon",
+            "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/5.png",
+            "types": [
+                "fire"
+            ],
+            "stats": {
+                "hp": 58,
+                "atk": 64,
+                "def": 58,
+                "satk": 80,
+                "sdef": 65,
+                "speed": 80,
+                "xp": 142,
+                "weight": 190
+            }
+        },
+        {
+            "name": "charizard",
+            "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/6.png",
+            "types": [
+                "fire",
+                "flying"
+            ],
+            "stats": {
+                "hp": 78,
+                "atk": 84,
+                "def": 78,
+                "satk": 109,
+                "sdef": 85,
+                "speed": 100,
+                "xp": 267,
+                "weight": 905
+            }
+        },
+        {
+            "name": "squirtle",
+            "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/7.png",
+            "types": [
+                "water"
+            ],
+            "stats": {
+                "hp": 44,
+                "atk": 48,
+                "def": 65,
+                "satk": 50,
+                "sdef": 64,
+                "speed": 43,
+                "xp": 63,
+                "weight": 90
+            }
+        },
+        {
+            "name": "wartortle",
+            "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/8.png",
+            "types": [
+                "water"
+            ],
+            "stats": {
+                "hp": 59,
+                "atk": 63,
+                "def": 80,
+                "satk": 65,
+                "sdef": 80,
+                "speed": 58,
+                "xp": 142,
+                "weight": 225
+            }
+        },
+        {
+            "name": "blastoise",
+            "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/9.png",
+            "types": [
+                "water"
+            ],
+            "stats": {
+                "hp": 79,
+                "atk": 83,
+                "def": 100,
+                "satk": 85,
+                "sdef": 105,
+                "speed": 78,
+                "xp": 265,
+                "weight": 855
+            }
+        },
+        {
+            "name": "caterpie",
+            "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/10.png",
+            "types": [
+                "bug"
+            ],
+            "stats": {
+                "hp": 45,
+                "atk": 30,
+                "def": 35,
+                "satk": 20,
+                "sdef": 20,
+                "speed": 45,
+                "xp": 39,
+                "weight": 29
+            }
+        },
+        {
+            "name": "metapod",
+            "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/11.png",
+            "types": [
+                "bug"
+            ],
+            "stats": {
+                "hp": 50,
+                "atk": 20,
+                "def": 55,
+                "satk": 25,
+                "sdef": 25,
+                "speed": 30,
+                "xp": 72,
+                "weight": 99
+            }
+        },
+        {
+            "name": "butterfree",
+            "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/12.png",
+            "types": [
+                "bug",
+                "flying"
+            ],
+            "stats": {
+                "hp": 60,
+                "atk": 45,
+                "def": 50,
+                "satk": 90,
+                "sdef": 80,
+                "speed": 70,
+                "xp": 198,
+                "weight": 320
+            }
         }
-    },
-    {
-        "name": "ivysaur",
-        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/2.png",
-        "types": [
-            "grass",
-            "poison"
-        ],
-        "stats": {
-            "hp": 60,
-            "atk": 62,
-            "def": 63,
-            "satk": 80,
-            "sdef": 80,
-            "speed": 60,
-            "xp": 142,
-            "weight": 130
-        }
-    },
-    {
-        "name": "venusaur",
-        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/3.png",
-        "types": [
-            "grass",
-            "poison"
-        ],
-        "stats": {
-            "hp": 80,
-            "atk": 82,
-            "def": 83,
-            "satk": 100,
-            "sdef": 100,
-            "speed": 80,
-            "xp": 263,
-            "weight": 1000
-        }
-    },
-    {
-        "name": "charmander",
-        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/4.png",
-        "types": [
-            "fire"
-        ],
-        "stats": {
-            "hp": 39,
-            "atk": 52,
-            "def": 43,
-            "satk": 60,
-            "sdef": 50,
-            "speed": 65,
-            "xp": 62,
-            "weight": 85
-        }
-    },
-    {
-        "name": "charmeleon",
-        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/5.png",
-        "types": [
-            "fire"
-        ],
-        "stats": {
-            "hp": 58,
-            "atk": 64,
-            "def": 58,
-            "satk": 80,
-            "sdef": 65,
-            "speed": 80,
-            "xp": 142,
-            "weight": 190
-        }
-    },
-    {
-        "name": "charizard",
-        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/6.png",
-        "types": [
-            "fire",
-            "flying"
-        ],
-        "stats": {
-            "hp": 78,
-            "atk": 84,
-            "def": 78,
-            "satk": 109,
-            "sdef": 85,
-            "speed": 100,
-            "xp": 267,
-            "weight": 905
-        }
-    },
-    {
-        "name": "squirtle",
-        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/7.png",
-        "types": [
-            "water"
-        ],
-        "stats": {
-            "hp": 44,
-            "atk": 48,
-            "def": 65,
-            "satk": 50,
-            "sdef": 64,
-            "speed": 43,
-            "xp": 63,
-            "weight": 90
-        }
-    },
-    {
-        "name": "wartortle",
-        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/8.png",
-        "types": [
-            "water"
-        ],
-        "stats": {
-            "hp": 59,
-            "atk": 63,
-            "def": 80,
-            "satk": 65,
-            "sdef": 80,
-            "speed": 58,
-            "xp": 142,
-            "weight": 225
-        }
-    },
-    {
-        "name": "blastoise",
-        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/9.png",
-        "types": [
-            "water"
-        ],
-        "stats": {
-            "hp": 79,
-            "atk": 83,
-            "def": 100,
-            "satk": 85,
-            "sdef": 105,
-            "speed": 78,
-            "xp": 265,
-            "weight": 855
-        }
-    },
-    {
-        "name": "caterpie",
-        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/10.png",
-        "types": [
-            "bug"
-        ],
-        "stats": {
-            "hp": 45,
-            "atk": 30,
-            "def": 35,
-            "satk": 20,
-            "sdef": 20,
-            "speed": 45,
-            "xp": 39,
-            "weight": 29
-        }
-    },
-    {
-        "name": "metapod",
-        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/11.png",
-        "types": [
-            "bug"
-        ],
-        "stats": {
-            "hp": 50,
-            "atk": 20,
-            "def": 55,
-            "satk": 25,
-            "sdef": 25,
-            "speed": 30,
-            "xp": 72,
-            "weight": 99
-        }
-    },
-    {
-        "name": "butterfree",
-        "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/12.png",
-        "types": [
-            "bug",
-            "flying"
-        ],
-        "stats": {
-            "hp": 60,
-            "atk": 45,
-            "def": 50,
-            "satk": 90,
-            "sdef": 80,
-            "speed": 70,
-            "xp": 198,
-            "weight": 320
-        }
-    }
-]
+    ]
+}
