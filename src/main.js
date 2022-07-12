@@ -3,9 +3,11 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import "@popperjs/core";
 import "bootstrap"
+import Notifications from '@kyvg/vue3-notification';
 import ApiPokedex from '@/views/ApiPokedex.vue'
 import MyPokedex from '@/views/MyPokedex.vue'
 const app = createApp(App);
+app.use(Notifications)
 
 const routes = [
 

@@ -6,30 +6,35 @@
 
     <nav class="navbar navbar-expand-lg navbar-light bg-dark mb-5">
         <div class="container-fluid text-">
-            <RouterLink to="/">
-                <a class="navbar-brand text-light " href="#">pokedexAPI</a>
+            <RouterLink to="/" style="text-decoration: none !important;">
+                <a class="navbar-brand text-light ">PokedexAPI</a>
             </RouterLink>
-            <RouterLink to="/mypokedex">
-                <a class="navbar-brand text-light" href="#">My Pokedex</a>
+            <RouterLink to="/mypokedex" style="text-decoration: none !important;">
+                <a class="navbar-brand text-light">My Pokedex</a>
             </RouterLink>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
+                aria-label="Toggle navigation" style=" background: white;">
                 <span class="icon"><img src="../assets/search.png" style="width: 20px;"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-                <div class="col-8"></div>
-                <div class="col-4">
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="Search" v-model="pokesearch"
-                            aria-label="Search" style="border-radius:15px ; border: 0;">
-
-                        <select class=" " v-model="typefilter" id="" style="border-radius:15px ; border: 0;">
-                            <option value="">All</option>
-                            <option v-for="item in types" :key="item" style="text-transform: uppercase;">{{ item }}
-                            </option>
-                        </select>
+                <div class="col-2 col-sm-4 col-md-4 col-lg-8"></div>
+                <div class="col-10 col-sm-8 col-md-8 col-lg-4">
+                    <form class="d-flex row">
+                        <div class="col-8">
+                            <input class="form-control me-2" type="search" id="search" placeholder="Search"
+                                v-model="pokesearch" aria-label="Search"
+                                style="border-radius:15px ; border: 0; background-color: #333;width: 100%; color: white;">
+                        </div>
+                        <div class="col-4">
+                            <select class=" " v-model="typefilter" id=""
+                                style="border-radius:15px ; border: 0;background-color: #333; color: white; height: 100%;">
+                                <option value="">All</option>
+                                <option v-for="item in types" :key="item" style="text-transform: uppercase;">{{ item }}
+                                </option>
+                            </select>
+                        </div>
                     </form>
                 </div>
 
@@ -40,7 +45,8 @@
     <div class="container p-2"
         style="border: 1px solid #222; border-radius: 15px; background-color: rgb(222, 222, 222);">
         <div class="row">
-            <div class="col-12 col-sm-6 col-md-6 col-lg-3" v-for="card in pokemonFilteredList.slice(0, 30)" :key="card">
+            <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3" v-for="card in pokemonFilteredList.slice(0, 30)"
+                :key="card">
                 <div class="card-wrapper">
                     <div class="content">
                         <div class="card-front mb-4" :style="{ 'background': colors[card.types[0]] }">
@@ -90,21 +96,33 @@
 
                                             <div v-if="card.captured == false" id="info" class="text-center">
                                                 <button @click="savePokemon(card)"
-                                                    style="width: 50%;background-color: rgb(100, 220, 100);color: white;border:0 ; border-radius: 5px; font-size: 18px;">CAPTURAR</button>
+                                                    style="width: 100%;background-color: rgb(100, 220, 100);color: white;border:0 ; border-radius: 5px; font-size: 18px;">CAPTURE</button>
 
                                             </div>
-                                            <div v-if="card.captured == true" id="info" class="text-center">
-                                                <button @click="deletePokemon(card)"
-                                                    style="width: 50%;background-color: rgb(120, 0, 0);color: white;border:0 ; border-radius: 5px; font-size: 18px;">DELETAR</button>
-                                            </div>
+
                                         </div>
                                         <div class="col-12 p-1">
+                                            <div v-if="card.captured == true" id="info" class="text-center">
+                                                <button @click="deletePokemon(card)"
+                                                    style="width: 100%;background-color: rgb(120, 0, 0);color: white;border:0 ; border-radius: 5px; font-size: 18px;">REMOVE</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-4 p-1">
                                             <div id="info" class="text-center">
 
                                                 <button @click="selectPokemonToInfo(card)" type="button"
                                                     class="btn btn-primary m-0 p-0" data-bs-toggle="modal"
                                                     data-bs-target="#extraStats"
-                                                    style="width: 50%;background-color: rgb(120, 122, 122);color: white;border:0 ; border-radius: 5px; font-size: 18px;">INFO</button>
+                                                    style="width: 100%;background-color: rgb(0, 122, 122);color: white;border:0 ; border-radius: 5px; font-size: 18px;">INFO</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-8 p-1">
+                                            <div id="info" class="text-center">
+
+                                                <button v-if="card.imageChanged == true" @click="removeImage(card)"
+                                                    type="button" class="btn btn-primary m-0 p-0"
+                                                    style="width: 100%;background-color: rgb(0, 52, 122);color: white;border:0 ; border-radius: 5px; font-size: 18px;">Remove
+                                                    Image</button>
                                             </div>
                                         </div>
                                         <div class="col-12">
@@ -112,6 +130,7 @@
                                             <div class="p-1">
 
                                                 <input class="form-control" type="file" id="formFile"
+                                                    v-if="card.captured == true"
                                                     v-on:change="imageUploaded($event, card)">
                                             </div>
 
@@ -130,9 +149,6 @@
 <script>
 import CardStats from './CardStats.vue';
 import FullStats from './FullStats.vue';
-
-
-
 export default
     {
         name: " PokemonList",
@@ -189,23 +205,64 @@ export default
                 })
                 if (!test || !test[0]) {
 
-
-
                     const pokemonToAdd = Object.assign({}, newPokemon)
-
                     pokemonToAdd.captured = true;
                     const pokedex = [...saved, pokemonToAdd];
                     const pokedexString = JSON.stringify(pokedex);
                     localStorage.setItem("pokemons", pokedexString); console.log(pokemonToAdd)
                     console.log(pokedex);
+                    //this.allPokemon = pokedex;
+                    this.$notify(
+                        {
+                            title: "GOTCHA!",
+                            text: "Pokemon captured! - " + newPokemon.name,
+                            type: "success"
+
+                        })
                 }
 
-                //}
+                else {
+                    this.$notify(
+                        {
+                            title: "BAD!",
+                            text: "Nothing here",
+                            type: "error",
+
+                        })
+                }
 
             },
+            savePokemonAPI(newPokemon) {
+                const local = localStorage.getItem("pokemons");
+                const saved = local ? JSON.parse(local) : [];
+                let test = saved.filter((pok) => {
+                    return pok.name.includes(newPokemon.name)
+                })
+                if (!test || !test[0]) {
+
+                    const pokemonToAdd = Object.assign({}, newPokemon)
+                    pokemonToAdd.captured = true;
+                    const pokedex = [...saved, pokemonToAdd];
+                    const pokedexString = JSON.stringify(pokedex);
+                    localStorage.setItem("pokemons", pokedexString); console.log(pokemonToAdd)
+                    console.log(pokedex);
+                    this.allPokemon = pokedex;
+                }
+            },
             deletePokemon(delPokemon) {
-                //const local = localStorage.getItem("pokemons");
-                //const saved = local ? JSON.parse(local) : [];
+                console.log('deleted -> ' + delPokemon.name);
+                const pokedex = this.filterToDel(delPokemon.name)
+                const pokedexString = JSON.stringify(pokedex);
+                localStorage.setItem("pokemons", pokedexString);
+                this.allPokemon = pokedex;
+                this.$notify(
+                    {
+                        title: "Bye friend",
+                        text: "Removed - " + delPokemon.name,
+                        type: "error",
+
+                    })
+            }, deletePokemonAPI(delPokemon) {
                 console.log('deleted -> ' + delPokemon.name);
                 const pokedex = this.filterToDel(delPokemon.name)
                 const pokedexString = JSON.stringify(pokedex);
@@ -221,17 +278,21 @@ export default
                 let rawImg;
                 reader.onloadend = () => {
                     rawImg = reader.result;
-                    localStorage.setItem(cardIMG.name, rawImg)
+                    localStorage.setItem(cardIMG.name, cardIMG.img)
                     cardIMG.img = rawImg;
-
+                    cardIMG.imageChanged = true
                     var newPokemon = Object.assign({}, cardIMG)
-                    this.deletePokemon(cardIMG)
-                    this.savePokemon(newPokemon)
+                    this.deletePokemonAPI(cardIMG)
+                    this.savePokemonAPI(newPokemon)
                     console.log(cardIMG.img);
+
                 }
-
-
                 reader.readAsDataURL(file);
+            },
+            removeImage(cardIMG) {
+
+                cardIMG.img = localStorage.getItem(cardIMG.name)
+                cardIMG.imageChanged = false
             },
 
             scrollTo(ele) {
@@ -336,8 +397,12 @@ export default
      z-index: 1;
      transform: rotateY(180deg);
  
-     transition: transform 1.5s;
+     transition: transform 00.5s;
  
+ }
+ 
+ #search::placeholder {
+     color: white;
  }
  </style>
 

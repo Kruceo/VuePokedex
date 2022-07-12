@@ -1,6 +1,7 @@
 <template>
-
-    <PokemonList :pokemons="getList()" />
+    <KeepAlive>
+        <PokemonList :pokemons="getList()" :is="activeComponent" />
+    </KeepAlive>
 
 </template>
 
@@ -11,7 +12,7 @@ import PokemonList from '@/components/PokemonList.vue';
 
 
 var pokemonList = JSON.parse('{"all":[]}');
-async function getPokemonList(initialOffset, limit, times) {
+async function genList(initialOffset, limit, times) {
 
     var offset = initialOffset;
     for (var i = 0; i < times; i++) {
@@ -47,6 +48,7 @@ async function getPokemonList(initialOffset, limit, times) {
                     ab: pokemonStats.abilities,
                     moves: pokemonStats.moves,
                     "captured": false,
+                    "imageChanged": false
 
 
 
@@ -76,6 +78,7 @@ async function getPokemonList(initialOffset, limit, times) {
                     ab: pokemonStats.abilities,
                     moves: pokemonStats.moves,
                     "captured": false,
+                    "imageChanged": false
                 });
                 console.log(pokemonStats)
             }
@@ -95,17 +98,28 @@ export default
         props: {},
         components: { PokemonList },
 
+        data() {
+            return {
+                loaded: "false"
+            }
+        },
         methods:
         {
+
             getList() { return pokemonList.all },
         },
         async setup() {
+            pokemonList = JSON.parse('{"all":[]}')
 
-            await getPokemonList(0, 10, 1)
+            await genList(0, 12, 1)
+
 
         },
         async mounted() {
-            await getPokemonList(10, 100, 5)
+            if (this.loaded == "false") {
+                await genList(13, 75, 5)
+                this.loaded = true;
+            }
         }
     }
 </script>
