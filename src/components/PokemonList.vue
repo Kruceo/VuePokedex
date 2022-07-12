@@ -1,9 +1,5 @@
 <template>
-
-
-
     <FullStats :card="selectedPokemon" />
-
     <nav class="navbar navbar-expand-lg navbar-light bg-dark mb-5">
         <div class="container-fluid text-">
             <RouterLink to="/" style="text-decoration: none !important;">
@@ -41,16 +37,15 @@
             </div>
         </div>
     </nav>
-
     <div class="container p-2"
         style="border: 1px solid #222; border-radius: 15px; background-color: rgb(222, 222, 222);">
         <div class="row">
-            <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3" v-for="card in pokemonFilteredList.slice(0, 30)"
-                :key="card">
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3"
+                v-for="card in pokemonFilteredList.slice(0, pagination)" :key="card">
                 <div class="card-wrapper">
                     <div class="content">
                         <div class="card-front mb-4" :style="{ 'background': colors[card.types[0]] }">
-                            <div id="card-body" style="min-width: 220px; min-height: 440px;">
+                            <div id="card-body" style=" min-height: 480px; min-width: 230px;">
                                 <div class="row">
                                     <div class="col-12">
                                         <div style="overflow:hidden; height: max-content;">
@@ -62,7 +57,6 @@
                                 <div class="card-body">
                                     <h5 id="pokemonName" class="card-title ">{{ card.name }}</h5>
                                     <div class="row m-0">
-
                                         <div class="col-12 p-1" v-if="!card.types[1]">
                                             <div id="typeBox" class="rounded bg-primary">
                                                 <p>{{ card.types[0] }}</p>
@@ -85,21 +79,40 @@
                         <div class="card-back h-100 position-absolute mb-4"
                             :style="{ 'background': colors[card.types[0]] }">
                             <div id="card-body" class="h-100" style="overflow:hidden">
-
                                 <div class="card-body">
-
                                     <div class="row m-0">
                                         <CardStats title="STATS" text="rafola" :pokemon-stat="card.stats" />
                                     </div>
                                     <div class="row">
+                                        <div class="col-6 p-1" v-if="card.types[1]">
+                                            <div id="info" class="text-center">
+                                                <button @click="setTypeFilter(card.types[0])" type="button"
+                                                    class="btn m-0 p-0 text-uppercase"
+                                                    style="width: 100%;background-color: rgb(52, 52, 52);color: white;border:0 ; border-radius: 5px; font-size: 18px;">
+                                                    {{ card.types[0] }}</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-6 p-1" v-if="card.types[1]">
+                                            <div id="info" class="text-center">
+                                                <button @click="setTypeFilter(card.types[1])" type="button"
+                                                    class="btn m-0 p-0"
+                                                    style="width: 100%;background-color: rgb(52, 52, 52);color: white;border:0 ; border-radius: 5px; font-size: 18px;">
+                                                    {{ card.types[1] }}</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 p-1" v-if="!card.types[1]">
+                                            <div id="info" class="text-center">
+                                                <button @click="setTypeFilter(card.types[0])" type="button"
+                                                    class="btn m-0 p-0"
+                                                    style="width: 100%;background-color: rgb(52, 52, 52);color: white;border:0 ; border-radius: 5px; font-size: 18px;">
+                                                    {{ card.types[0] }}</button>
+                                            </div>
+                                        </div>
                                         <div class="col-12 p-1">
-
                                             <div v-if="card.captured == false" id="info" class="text-center">
                                                 <button @click="savePokemon(card)"
                                                     style="width: 100%;background-color: rgb(100, 220, 100);color: white;border:0 ; border-radius: 5px; font-size: 18px;">CAPTURE</button>
-
                                             </div>
-
                                         </div>
                                         <div class="col-12 p-1">
                                             <div v-if="card.captured == true" id="info" class="text-center">
@@ -107,18 +120,17 @@
                                                     style="width: 100%;background-color: rgb(120, 0, 0);color: white;border:0 ; border-radius: 5px; font-size: 18px;">REMOVE</button>
                                             </div>
                                         </div>
-                                        <div class="col-4 p-1">
+                                        <div class="col-12 p-1">
                                             <div id="info" class="text-center">
-
                                                 <button @click="selectPokemonToInfo(card)" type="button"
                                                     class="btn btn-primary m-0 p-0" data-bs-toggle="modal"
                                                     data-bs-target="#extraStats"
-                                                    style="width: 100%;background-color: rgb(0, 122, 122);color: white;border:0 ; border-radius: 5px; font-size: 18px;">INFO</button>
+                                                    style="width: 100%;background-color: rgb(0, 122, 122);color: white;border:0 ; border-radius: 5px; font-size: 18px;">SHOW
+                                                    MORE</button>
                                             </div>
                                         </div>
-                                        <div class="col-8 p-1">
+                                        <div class="col-6 p-1">
                                             <div id="info" class="text-center">
-
                                                 <button v-if="card.imageChanged == true" @click="removeImage(card)"
                                                     type="button" class="btn btn-primary m-0 p-0"
                                                     style="width: 100%;background-color: rgb(0, 52, 122);color: white;border:0 ; border-radius: 5px; font-size: 18px;">Remove
@@ -126,14 +138,11 @@
                                             </div>
                                         </div>
                                         <div class="col-12">
-
                                             <div class="p-1">
-
-                                                <input class="form-control" type="file" id="formFile"
+                                                <input class="form-control" type="file" id="formFile" accept="image/*"
                                                     v-if="card.captured == true"
                                                     v-on:change="imageUploaded($event, card)">
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -143,7 +152,20 @@
                 </div>
             </div>
         </div>
+        <div id="info" class="text-center" v-if="Object.keys(pokemonFilteredList).length > 12">
+
+            <div class="row">
+                <div class="col-12">
+                    <button @click="addPages(12)" type="button" class="btn btn-primary m-0 p-0"
+                        style="width: 20%;height: 60px ;background-color: rgb(0, 52, 122);color: white;border:0 ; border-radius: 5px; font-size: 18px;">Load
+                        More</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+
+
 </template>
 
 <script>
@@ -159,6 +181,7 @@ export default
                 selectedPokemon: [],
                 pokesearch: "",
                 typefilter: "",
+                pagination: 12,
                 colors: {
                     grass: "#3a7b50 ", steel: "#5b7c8d",
                     water: "#0abfbc", fire: "#ef4335", poison: "#036564", electric: "#ffdc68"
@@ -169,7 +192,10 @@ export default
                     , "ground", "bug", "fairy", "fighting", "psychic", "rock", "ghost"
                     , "ice", "dragon", "dark"],
             };
-        }, computed: {
+        },
+
+
+        computed: {
             pokemonFilteredList() {
                 return this.allPokemon.filter((pokemon) => {
 
@@ -190,9 +216,7 @@ export default
 
             filterToDel(filterString) {
                 return this.allPokemon.filter((pokemon) => {
-
                     if (pokemon.name != filterString) {
-                        console.log(pokemon.name + ' % ' + filterString);
                         return pokemon;
                     }
                 });
@@ -209,9 +233,8 @@ export default
                     pokemonToAdd.captured = true;
                     const pokedex = [...saved, pokemonToAdd];
                     const pokedexString = JSON.stringify(pokedex);
-                    localStorage.setItem("pokemons", pokedexString); console.log(pokemonToAdd)
-                    console.log(pokedex);
-                    //this.allPokemon = pokedex;
+                    localStorage.setItem("pokemons", pokedexString);
+
                     this.$notify(
                         {
                             title: "GOTCHA!",
@@ -244,13 +267,12 @@ export default
                     pokemonToAdd.captured = true;
                     const pokedex = [...saved, pokemonToAdd];
                     const pokedexString = JSON.stringify(pokedex);
-                    localStorage.setItem("pokemons", pokedexString); console.log(pokemonToAdd)
-                    console.log(pokedex);
+                    localStorage.setItem("pokemons", pokedexString);
                     this.allPokemon = pokedex;
                 }
             },
             deletePokemon(delPokemon) {
-                console.log('deleted -> ' + delPokemon.name);
+
                 const pokedex = this.filterToDel(delPokemon.name)
                 const pokedexString = JSON.stringify(pokedex);
                 localStorage.setItem("pokemons", pokedexString);
@@ -262,8 +284,9 @@ export default
                         type: "error",
 
                     })
-            }, deletePokemonAPI(delPokemon) {
-                console.log('deleted -> ' + delPokemon.name);
+            },
+            deletePokemonAPI(delPokemon) {
+
                 const pokedex = this.filterToDel(delPokemon.name)
                 const pokedexString = JSON.stringify(pokedex);
                 localStorage.setItem("pokemons", pokedexString);
@@ -284,7 +307,7 @@ export default
                     var newPokemon = Object.assign({}, cardIMG)
                     this.deletePokemonAPI(cardIMG)
                     this.savePokemonAPI(newPokemon)
-                    console.log(cardIMG.img);
+
 
                 }
                 reader.readAsDataURL(file);
@@ -303,9 +326,22 @@ export default
                 });
             },
             selectPokemonToInfo(cardToInfo) {
-                console.log(cardToInfo);
+
                 this.selectedPokemon = cardToInfo;
 
+            },
+            addPages(num) {
+
+                console.log(this.pagination);
+                this.pagination += num;
+                this.pokesearch = ' ';
+                this.pokesearch = '';
+
+
+            },
+            setTypeFilter(typeFilter) {
+                console.log(typeFilter);
+                this.typefilter = typeFilter;
             }
         },
 

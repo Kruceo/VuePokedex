@@ -10,7 +10,6 @@ const app = createApp(App);
 app.use(Notifications)
 
 const routes = [
-
     {
         path: "/",
         name: "ApiPokedex",

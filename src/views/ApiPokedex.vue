@@ -1,4 +1,7 @@
 <template>
+
+
+
     <KeepAlive>
         <PokemonList :pokemons="getList()" :is="activeComponent" />
     </KeepAlive>
@@ -80,7 +83,7 @@ async function genList(initialOffset, limit, times) {
                     "captured": false,
                     "imageChanged": false
                 });
-                console.log(pokemonStats)
+
             }
         }
 
@@ -89,7 +92,7 @@ async function genList(initialOffset, limit, times) {
 
 
     }
-    console.log(pokemonList)
+
 }
 
 export default

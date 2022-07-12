@@ -19,6 +19,7 @@ export default {
 $primary: #455;
 $secondary: #ffffff77;
 
+
 @import 'bootstrap';
 </style>
 
@@ -33,7 +34,7 @@ $secondary: #ffffff77;
 
   // additional styling hook when usingtype parameter, i.e. this.$notify({ type: 'success', message: 'Yay!' })
   &.success {
-    background-color: rgb(28, 116, 19);
+    background-color: rgb(100, 220, 100);
     border-radius: 15px;
     padding: 10px;
     margin: 5px;
