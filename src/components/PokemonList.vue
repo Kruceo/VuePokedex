@@ -137,7 +137,7 @@
                                                     Image</button>
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <div class="col-6">
                                             <div class="p-1">
                                                 <input class="form-control" type="file" id="formFile" accept="image/*"
                                                     v-if="card.captured == true"
