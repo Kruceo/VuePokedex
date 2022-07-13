@@ -129,18 +129,19 @@
                                                     MORE</button>
                                             </div>
                                         </div>
-                                        <div class="col-6 p-1">
-                                            <div id="info" class="text-center">
-                                                <button v-if="card.imageChanged == true" @click="removeImage(card)"
-                                                    type="button" class="btn btn-primary m-0 p-0"
-                                                    style="width: 100%;background-color: rgb(0, 52, 122);color: white;border:0 ; border-radius: 5px; font-size: 18px;">Remove
-                                                    Image</button>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label v-if="card.imageChanged == true" @click="removeImage(card)"
+                                                    type="button" class="control-label label-bordered btn">Remove
+                                                    icon</label>
                                             </div>
                                         </div>
                                         <div class="col-6">
-                                            <div class="p-1">
-                                                <input class="form-control" type="file" id="formFile" accept="image/*"
-                                                    v-if="card.captured == true"
+                                            <div class="form-group">
+                                                <label for="fupload" class="control-label label-bordered btn">Toggle
+                                                    icon</label>
+                                                <input type="file" id="fupload" name="fupload"
+                                                    class="fupload form-control"
                                                     v-on:change="imageUploaded($event, card)">
                                             </div>
                                         </div>
@@ -436,6 +437,18 @@ export default
  }
  
  #search::placeholder {
+     color: white;
+ }
+ 
+ input[type="file"] {
+     display: none;
+ }
+ 
+ .label-bordered {
+ 
+     background-color: rgb(0, 89, 255);
+     border-radius: 5px;
+     cursor: pointer;
      color: white;
  }
  </style>
