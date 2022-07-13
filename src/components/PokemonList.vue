@@ -81,7 +81,7 @@
                             <div id="card-body" class="h-100" style="overflow:hidden">
                                 <div class="card-body">
                                     <div class="row m-0">
-                                        <CardStats title="STATS" text="rafola" :pokemon-stat="card.stats" />
+                                        <CardStats title="STATS" text="stats" :pokemon-stat="card.stats" />
                                     </div>
                                     <div class="row">
                                         <div class="col-6 p-1" v-if="card.types[1]">
@@ -169,6 +169,7 @@
 </template>
 
 <script>
+
 import CardStats from './CardStats.vue';
 import FullStats from './FullStats.vue';
 export default
@@ -193,6 +194,9 @@ export default
                     , "ice", "dragon", "dark"],
             };
         },
+        mounted() {
+            window.addEventListener('scroll', () => { this.addPages(0) })
+        },
 
 
         computed: {
@@ -210,9 +214,6 @@ export default
         ,
         methods:
         {
-            clone(itemToClone) {
-                return itemToClone;
-            },
 
             filterToDel(filterString) {
                 return this.allPokemon.filter((pokemon) => {
@@ -331,14 +332,11 @@ export default
 
             },
             addPages(num) {
-
-                console.log(this.pagination);
                 this.pagination += num;
                 this.pokesearch = ' ';
                 this.pokesearch = '';
-
-
             },
+
             setTypeFilter(typeFilter) {
                 console.log(typeFilter);
                 this.typefilter = typeFilter;
@@ -446,7 +444,7 @@ export default
 
 
 
-                                        //import { ref } from 'vue';
+                                     
 
 
 
