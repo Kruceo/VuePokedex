@@ -138,7 +138,7 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <label for="fupload" class="control-label label-bordered btn">Toggle
+                                                <label for="fupload" class="control-label label-bordered btn"  v-if="card.captured == true">Toggle
                                                     icon</label>
                                                 <input type="file" id="fupload" name="fupload"
                                                     class="fupload form-control"
