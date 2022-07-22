@@ -34,7 +34,7 @@ async function genList(initialOffset, limit, times) {
                 pokemonList["all"].push({
                     "name": pokemonStats.name,
                     "id": pokemonStats.id,
-                    "img": pokemonStats.sprites.other.home.front_default,
+                    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/" + pokemonStats.id + ".png",
                     "types": [pokemonStats.types[0].type.name, pokemonStats.types[1].type.name],
                     stats: {
                         "hp": pokemonStats.stats[0].base_stat,
@@ -64,7 +64,7 @@ async function genList(initialOffset, limit, times) {
                 pokemonList['all'].push({
                     "name": pokemonStats.name,
                     "id": pokemonStats.id,
-                    "img": pokemonStats.sprites.other.home.front_default,
+                    "img": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/" + pokemonStats.id + ".png",
                     "types": [pokemonStats.types[0].type.name],
                     stats: {
                         "hp": pokemonStats.stats[0].base_stat,
