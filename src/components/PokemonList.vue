@@ -333,9 +333,10 @@ export default
 
             },
             addPages(num) {
+                var past = this.pokesearch;
                 this.pagination += num;
                 this.pokesearch = ' ';
-                this.pokesearch = '';
+                this.pokesearch = past;
             },
 
             setTypeFilter(typeFilter) {
