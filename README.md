@@ -25,7 +25,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## About
 
-O projeto feito a partir da PokeAPI, conta com varias features, como:
+The project is built around the PokeAPI, and has features like:
 
 * Find by name;
 * Find by type;
